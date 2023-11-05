@@ -17,8 +17,10 @@ dependencies {
 	annotationProcessor 'org.projectlombok:lombok'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	implementation group: 'org.springframework', name: 'spring-webflux', version: '6.0.13'
+	implementation group: 'org.eclipse.jetty', name: 'jetty-reactive-httpclient', version: '1.0.3'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testImplementation group: 'com.github.tomakehurst', name: 'wiremock', version: '3.0.1'
+	testImplementation group: 'ru.lanwen.wiremock', name: 'wiremock-junit5', version: '1.3.1'
 }
 
 test {

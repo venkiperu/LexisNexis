@@ -1,4 +1,0 @@
-spring:
-  application:
-    name: "Sample Spring Boot Application"
-todo_base_url: https://jsonplaceholder.typicode.com
