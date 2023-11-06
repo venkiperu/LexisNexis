@@ -2,6 +2,7 @@ package com.lexisnexi.risk.controller;
 
 import com.lexisnexi.risk.model.CompanyDetailsResponse;
 import com.lexisnexi.risk.service.CompanyDetailsService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,11 +20,11 @@ public class CompanySearchController {
 		this.companyDetailsService = companyDetailsService;
 	}
 
-	@GetMapping("/Officers")
+	@GetMapping(value= "/Officers", produces = "application/json")
 	public ResponseEntity<CompanyDetailsResponse> getOfficers(@RequestParam long companyNumber) {
 		return new ResponseEntity<>( companyDetailsService.getOfficersDetailsFromCompany(companyNumber), HttpStatus.OK);
 	}
-	@GetMapping("/Search")
+	@GetMapping(value="/Search",produces = "application/json" )
 	public ResponseEntity<CompanyDetailsResponse> getCompany(@RequestParam String search) {
 		return new ResponseEntity<>( companyDetailsService.getCompanyDetails(search), HttpStatus.OK);
 	}

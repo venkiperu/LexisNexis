@@ -34,7 +34,7 @@ public class CompanyDetailsServiceImpl implements CompanyDetailsService {
 
     private List<Item> getItems() {
 
-        return Arrays.asList(new Item());
+        return Arrays.asList(getItem());
 
     }
 
