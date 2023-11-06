@@ -1,45 +1,31 @@
 package com.lexisnexi.risk.controller;
 
-import com.lexisnexi.risk.CompanyDetails;
+import com.lexisnexi.risk.model.CompanyDetailsResponse;
+import com.lexisnexi.risk.service.CompanyDetailsService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.reactive.function.client.WebClient;
 
 @RestController
 @RequestMapping("/TruProxyAPI/rest/Companies/v1")
 public class CompanySearchController {
 
-	private final WebClient companySearchWebClient;
+	private final CompanyDetailsService companyDetailsService;
 
-	public CompanySearchController(WebClient companySearchWebClient) {
-		this.companySearchWebClient = companySearchWebClient;
+	public CompanySearchController(CompanyDetailsService companyDetailsService) {
+		this.companyDetailsService = companyDetailsService;
 	}
 
-
-	@GetMapping
-	public ResponseEntity<CompanyDetails> getComapanyOfficers() {
-		return new ResponseEntity<>(this.companySearchWebClient
-				.get()
-				.uri("/Officers")
-				.retrieve()
-				.bodyToMono(CompanyDetails.class)
-				.block(),HttpStatus.OK);
-
-
+	@GetMapping("/Officers")
+	public ResponseEntity<CompanyDetailsResponse> getOfficers(@RequestParam long companyNumber) {
+		return new ResponseEntity<>( companyDetailsService.getOfficersDetailsFromCompany(companyNumber), HttpStatus.OK);
 	}
-
 	@GetMapping("/Search")
+	public ResponseEntity<CompanyDetailsResponse> getCompany(@RequestParam String search) {
+		return new ResponseEntity<>( companyDetailsService.getCompanyDetails(search), HttpStatus.OK);
+	}
 
-	public ResponseEntity<CompanyDetails> getCompany() {
-		return new ResponseEntity<>(getCompanyDetails(), HttpStatus.OK);
-	}
-	private CompanyDetails getCompanyDetails() {
-		CompanyDetails companyDetails = new CompanyDetails();
-		companyDetails.setCompanyName("Sarsun");
-		companyDetails.setCompanyNumber("1234");
-		return companyDetails;
-	}
 }

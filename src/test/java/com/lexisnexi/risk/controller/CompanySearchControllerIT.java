@@ -33,7 +33,7 @@ public class CompanySearchControllerIT {
     }
 
     @Test
-    void testGetAllTodosShouldReturnDataFromClient() {
+    void testGetAllOfficersFromCompany() {
         this.wireMockServer.stubFor(
                 WireMock.get("/Officers")
                         .willReturn(aResponse()
@@ -43,7 +43,28 @@ public class CompanySearchControllerIT {
 
         this.webTestClient
                 .get()
-                .uri("/TruProxyAPI/rest/Companies/v1/Officers")
+                .uri("/TruProxyAPI/rest/Companies/v1/Officers?companyNumber=1234")
+                .exchange()
+                .expectStatus()
+                .is2xxSuccessful()
+                .expectBody()
+                .jsonPath("$companyName")
+                .isEqualTo("sarsun");
+
+    }
+
+    @Test
+    void testGetCompanyDetails() {
+        this.wireMockServer.stubFor(
+                WireMock.get("/Search")
+                        .willReturn(aResponse()
+                                .withHeader("Content-Type", MediaType.APPLICATION_JSON_VALUE)
+                                .withBodyFile("0422ef7a-5034-4f7a-afc0-14209d73c85e.json"))
+        );
+
+        this.webTestClient
+                .get()
+                .uri("/TruProxyAPI/rest/Companies/v1/Search?search=sarsun")
                 .exchange()
                 .expectStatus()
                 .is2xxSuccessful()
