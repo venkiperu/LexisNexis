@@ -13,6 +13,7 @@ import java.util.List;
 public class CompanyDetailsServiceImpl implements CompanyDetailsService {
     @Override
     public CompanyDetailsResponse getCompanyDetails(String Search) {
+
         return getCompanyDetailsResponse();
     }
 
